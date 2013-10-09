@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# These tests utilize the fuzzdb files
 import sys,base64
 from looper import *
 

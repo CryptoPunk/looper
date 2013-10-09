@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+'''
+Itertools extension for generating large and complex datasets using generators.
+'''
 from itertools import *
 
 def concat(*args):
