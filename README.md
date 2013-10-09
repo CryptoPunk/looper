@@ -16,9 +16,8 @@ This module was created after getting sick of the limited functionality of burp 
 
 * looper.SimpleHTTPTestCase
   * A simple HTTP test case framework
-```
 
-# Simple URL Iteration
+### Simple URL Iteration
 ```
 #!/usr/bin/env python
 import sys,datetime,random
@@ -48,7 +47,7 @@ test = SimpleHTTPTestCase(params)
 test.run()
 ```
 
-## JSON POST example
+### JSON POST example
 ```
 #!/usr/bin/env python
 import sys,datetime,random,json
