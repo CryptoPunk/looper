@@ -4,9 +4,6 @@ from pprint import pprint
 sys.path.append('libs')
 from looper import *
     
-def userid_tests():
-    return iter([0,1,2,3,4,5,6])
-
 params = iterutil.chain(
     iterutil.dict_zip(
         method = iterutil.repeat('GET'),
