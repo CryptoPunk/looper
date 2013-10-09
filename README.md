@@ -22,35 +22,34 @@ looper.SimpleHTTPTestCase
 *Example:*
 
 ```
-#!/usr/bin/python
-# These tests utilize the fuzzdb files
-import sys,base64
+#!/usr/bin/env python
+import sys,datetime,random
+from pprint import pprint
+sys.path.append('libs')
 from looper import *
+    
+def userid_tests():
+    return iter([0,1,2,3,4,5,6])
 
-def int_tests(maxint=sys.maxint):
-    return genutil.ifilter(lambda x: x<maxint,
-        genutil.imap(int,
-            genutil.readfiles(
-                'attack-payloads/integer-overflow/decimal_numbers.txt'
-                )
-            )
-        )
+params = iterutil.chain(
+    iterutil.dict_zip(
+        method = iterutil.repeat('GET'),
+        url = iterutil.concat(
+            iterutil.repeat('http://'),
+            iterutil.repeat('example.com'),
+            ["/uri","/uri1"],
+        ),
+        headers = iterutil.dict_zip({
+            'User-Agent': iterutil.repeat('SecurityInnovation/0.0.1/Looper'),
+            'Accept': iterutil.repeat("application/json"),
+            'Date': iterutil.repeat_f(lambda: datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
+            'X-Request-Id': iterutil.repeat_f(lambda:"%032x" % random.getrandbits(128)),
+            'Content-Type': iterutil.repeat('application/json'),
+        }),
+    ),
+)
 
-def string_tests():
-    return genutil.chain(
-        genutil.readfiles(
-            'attack-payloads/riak_tests',
-            'attack-payloads/all-attacks/all-attacks-unix.txt',
-            'attack-payloads/path-traversal/traversals-8-deep-exotic-encoding.txt',
-            'attack-payloads/regex/patterns',
-            ),
-        genutil.imap(base64.b64decode,
-            genutil.readfiles(
-                'attack-payloads/regex/strings.b64'
-                )
-            ),
-        )
+test = SimpleHTTPTestCase(params)
+test.run()
+
 ```
-
- 
-
