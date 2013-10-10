@@ -8,7 +8,7 @@ import urllib2
 
 __all__ = ['iterutil','SimpleHTTPTest','SimpleHTTPCheck','TestCase', 'SimpleHTTPTestCase']
 
-class TestCase:
+class TestCase():
     '''
     The base test case
     '''

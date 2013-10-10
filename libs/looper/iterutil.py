@@ -142,8 +142,6 @@ def repeat_f(f, n=0, args=[], kwargs={}):
         ...
 
     '''
-    print args
-    print kwargs
     i = 0
     while n == 0 or i < n:
         i+=1

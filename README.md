@@ -78,3 +78,5 @@ params = iterutil.chain(
 test = SimpleHTTPTestCase(params)
 test.run()
 ```
+
+For more examples and stub test cases, see the tests directory.
