@@ -2,7 +2,7 @@
 import sys,datetime,random,json
 from pprint import pprint
 sys.path.append('libs')
-from looper import *
+from looper import iterutil,SimpleHTTP
     
 params = iterutil.chain(
     iterutil.dict_zip(
@@ -24,7 +24,7 @@ params = iterutil.chain(
     ),
 )
 
-test = SimpleHTTPTestCase(params)
+test = SimpleHTTP.TestCase(params)
 test.run()
 
 

@@ -2,7 +2,7 @@
 import sys,datetime,random,urllib2
 from pprint import pprint
 sys.path.append('libs')
-from looper import *
+from looper import iterutil,SimpleHTTP,BaseTestCase
 
     
 params = iterutil.chain(
@@ -23,7 +23,7 @@ params = iterutil.chain(
 )
 
 #LoggingHTTPTestCase must subclass object in order to use super()
-class LoggingHTTPTestCase(SimpleHTTPTest, SimpleHTTPCheck, TestCase, object):
+class LoggingHTTPTestCase(SimpleHTTP.Test, SimpleHTTP.Check, BaseTestCase, object):
     def __init__(self,file_name,*args,**kwargs):
         self.fh = open(file_name,'w')
         #Continue with the next mixin

@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-import sys,datetime,random,urllib2
-from pprint import pprint
+import sys,datetime,random
+from urlparse import urlparse
 sys.path.append('libs')
-from looper import iterutil,SimpleHTTP
-
-    
+from looper import iterutil,blackmambaHTTP
 params = iterutil.chain(
     iterutil.dict_zip(
         method = iterutil.repeat('GET'),
@@ -23,12 +20,5 @@ params = iterutil.chain(
     ),
 )
 
-test = SimpleHTTP.TestCase(params)
-
-#Install a proxy before running
-proxy = urllib2.ProxyHandler({'http': '127.0.0.1:8080'})
-opener = urllib2.build_opener(proxy)
-urllib2.install_opener(opener)
+test = blackmambaHTTP.TestCase(params)
 test.run()
-
-
