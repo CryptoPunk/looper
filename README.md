@@ -5,17 +5,14 @@ This module was created after getting sick of the limited functionality of burp 
 * looper.iterutil
   * Itertools extension for generating large and complex datasets using generators.
 
-* looper.TestCase
+* looper.BaseTestCase
   * The base test case
 
-* looper.SimpleHTTPTest
-  * A simple HTTP test runner
+* looper.SimpleHTTP
+  * A set of mixins which use urllib2
 
-* looper.SimpleHTTPCheck
-  * A simple HTTP response check
-
-* looper.SimpleHTTPTestCase
-  * A simple HTTP test case framework
+* looper.blackmambaHTTP
+  * A set of test case mixins which use rootfoo's blackmamba
 
 ### Simple URL Iteration
 ```
@@ -23,7 +20,7 @@ This module was created after getting sick of the limited functionality of burp 
 import sys,datetime,random
 from pprint import pprint
 sys.path.append('libs')
-from looper import *
+from looper import iterutil,SimpleHTTP
     
 params = iterutil.chain(
     iterutil.dict_zip(
@@ -43,7 +40,7 @@ params = iterutil.chain(
     ),
 )
 
-test = SimpleHTTPTestCase(params)
+test = SimpleHTTP.TestCase(params)
 test.run()
 ```
 
@@ -53,7 +50,7 @@ test.run()
 import sys,datetime,random,json
 from pprint import pprint
 sys.path.append('libs')
-from looper import *
+from looper import iterutil,SimpleHTTP
     
 params = iterutil.chain(
     iterutil.dict_zip(
@@ -75,7 +72,7 @@ params = iterutil.chain(
     ),
 )
 
-test = SimpleHTTPTestCase(params)
+test = SimpleHTTP.TestCase(params)
 test.run()
 ```
 
