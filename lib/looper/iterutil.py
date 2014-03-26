@@ -71,7 +71,7 @@ def concat(*args):
     '''
     return a generator which concatinate all of the elements at each ordinal
 
-    Example:
+    Example::
         A = ['1','2']
         B = ['a','b']
         r = util.concat(A,B)
