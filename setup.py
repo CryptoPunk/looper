@@ -8,7 +8,7 @@ setup(name='looper',
       author='Max Vohra',
       author_email='max@seattlenetworks.com',
       url='http://seattlenetworks.com/',
-      package_dir = {'': 'libs'},
+      package_dir = {'': 'lib'},
       packages=['looper'],
      )
 

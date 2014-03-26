@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys,datetime,random,urllib2
 from pprint import pprint
-sys.path.append('libs')
+sys.path.append('lib')
 from looper import iterutil,SimpleHTTP
 
     

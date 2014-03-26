@@ -1,6 +1,6 @@
 import sys,datetime,random
 from urlparse import urlparse
-sys.path.append('libs')
+sys.path.append('lib')
 from looper import iterutil,blackmambaHTTP
 params = iterutil.chain(
     iterutil.dict_zip(
