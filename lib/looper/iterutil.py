@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 '''
 Itertools extension for generating large and complex datasets using generators.
-
+::
     Infinite iterators:
     count([n]) --> n, n+1, n+2, ...
     cycle(p) --> p0, p1, ... plast, p0, p1, ...
@@ -69,15 +69,20 @@ repeat_f
 
 def concat(*args):
     '''
+    :param *args: lists to be concatinated
+    :type *args: iterable
+    :rtype: iterable
+
     return a generator which concatinate all of the elements at each ordinal
 
     Example::
+
         A = ['1','2']
         B = ['a','b']
         r = util.concat(A,B)
-
+    
         print [x for x in r]
-
+    
         #OUTPUT
         ['1a', '2b']
     '''
@@ -98,8 +103,14 @@ def concat(*args):
 
 def readfiles(*filenames):
     '''
+    :param *args: files to be read.
+    :type *args: iterable
+    :rtype: iterable
+
     Create a generator to return each line of the specified files in order
-    Example:
+
+    Example::
+
         files = readfiles("/path/to/file1","/path/to/file2")
         for line in files:
             print line
@@ -110,16 +121,19 @@ def readfiles(*filenames):
         for line in open(path,"rb"):
             yield line.strip()
 
-def dict_product(d=None,**kwargs):
+def dict_product(__d=None,**kwargs):
     '''
+    :param Kn: each k is used as the index in the resulting dicts
+    :param Vn: each v is expected to be iterable
+    :type Vn: iterable
+    :rtype: dict generator
+
     A version of itertools.product for dictionaries
 
-    this creates a generator which takes in a hash where each value is an array
-      returns: a hash built using the product of these values
+    this generates a Cartesian Product of the values supplied as keyword arguments, expecting each value to be in iterable
 
-    can also take kwargs as the source dictionary
+    Example::
 
-    Example:
         A = {"a":[1,2],"b":['x','y']}
         r_1 = util.hash_product(A)
         r_2 = util.hash_product(a=[1,2], b=['x','y'])
@@ -134,10 +148,11 @@ def dict_product(d=None,**kwargs):
          {'a': 2, 'b': 'y'}]
 
     '''
-    if d is None:
-        d = kwargs
-    k = d.keys()
-    for y in product(*d.values()):
+    #TODO: remove dictionary ambiguity
+    if __d is None:
+        __d = kwargs
+    k = __d.keys()
+    for y in product(*__d.values()):
         ret = {}
         for x in range(len(k)):
             ret[k[x]] = y[x]
@@ -145,12 +160,17 @@ def dict_product(d=None,**kwargs):
 
 def dict_zip(**kwargs):
     '''
+    :param Kn: each k is used as the index in the resulting dicts
+    :param Vn: each v is expected to be iterable
+    :type Vn: iterable
+    :rtype: dict generator
+
     A version of itertools.izip for dictionaries
 
-    this creates a generator which takes in a hash where each value is an array
-      returns: a hash built by zipping of these values
+    this generates a new ordinal for each ordinal of the supplied keyword argument
 
-    Example:
+    Example::
+
         A = {"a":[1,2],"b":['x','y']}
         r = util.hash_product(a=[1,2], b=['x','y'])
         
@@ -169,7 +189,8 @@ def kwimap(f, *args, **kwargs):
     '''
     like imap, but pass kwargs as well.
 
-    Example:
+    Example::
+
         def test(*args,**kwargs):
             return "args: %s, kwargs: %s" % (repr(args),repr(kwargs))
             
@@ -200,7 +221,8 @@ def repeat_f(f, n=None, args=[], kwargs={}):
     repeatedly calls function f, up to n times with arguments *args and **kwargs
     Like map, but repetitive
 
-    Example:
+    Example::
+
         import string,random
 
         rand_string = lambda c,n: ''.join(random.choice(c) for x in range(n))
@@ -233,12 +255,3 @@ def repeat_f(f, n=None, args=[], kwargs={}):
         i+=1
         yield f(*args, **kwargs)
 
-if __name__ == "__main__":
-    import string,random
-    rand_string = lambda c,n: ''.join(random.choice(c) for x in range(n))
-    r = repeat_f(rand_string,args=[string.uppercase,32])
-    for x in r:
-        print x
-
-#    for f in dict_zip({"a":[1,2,3],"b":repeat(2),"c":repeat(3)}):
-#        print f
