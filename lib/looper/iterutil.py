@@ -121,12 +121,32 @@ def readfiles(*filenames):
         for line in open(path,"rb"):
             yield line.strip()
 
-def dict_product(__d=None,**kwargs):
+def dict_merge(*args):
+    '''
+    :param arg[n]: each argument is 
+    :type arg[n]: dictionary
+    :rtype: dictionary generator
+
+    this merges two or more dictionaries, producing a single output dictionary.
+    Example::
+        a={'a':1,'b':2}
+        b={'c':3,'d':4}
+        print dict_merge(a,b)
+
+    Output::
+
+        {'a': 1, 'c': 3, 'b': 2, 'd': 4}
+
+    '''
+
+    return dict(itertools.chain(*itertools.imap(dict.items,args)))
+
+def dict_product(**kwargs):
     '''
     :param Kn: each k is used as the index in the resulting dicts
     :param Vn: each v is expected to be iterable
     :type Vn: iterable
-    :rtype: dict generator
+    :rtype: dictionary generator
 
     A version of itertools.product for dictionaries
 
@@ -141,7 +161,8 @@ def dict_product(__d=None,**kwargs):
 
         pprint([x for x in r_1])
 
-        #OUTPUT    
+    Output::
+
         [{'a': 1, 'b': 'x'},
          {'a': 1, 'b': 'y'},
          {'a': 2, 'b': 'x'},
@@ -149,10 +170,8 @@ def dict_product(__d=None,**kwargs):
 
     '''
     #TODO: remove dictionary ambiguity
-    if __d is None:
-        __d = kwargs
-    k = __d.keys()
-    for y in product(*__d.values()):
+    k = kwargs.keys()
+    for y in product(*kwargs.values()):
         ret = {}
         for x in range(len(k)):
             ret[k[x]] = y[x]
