@@ -177,7 +177,7 @@ def dict_product(**kwargs):
             ret[k[x]] = y[x]
         yield ret
 
-def dict_zip(**kwargs):
+def dict_zip(__dict_zip=None,**kwargs):
     '''
     :param Kn: each k is used as the index in the resulting dicts
     :param Vn: each v is expected to be iterable
@@ -200,8 +200,10 @@ def dict_zip(**kwargs):
          {'a': 2, 'b': 'y'}]
 
     '''
-    k = kwargs.keys()
-    for v in izip(*kwargs.values()):
+    if __dict_zip == None:
+        __dict_zip = kwargs
+    k = __dict_zip.keys()
+    for v in izip(*__dict_zip.values()):
         yield dict([(k[x],v[x]) for x in range(len(k))])
 
 def kwimap(f, *args, **kwargs):
