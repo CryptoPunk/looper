@@ -31,7 +31,7 @@ params = iterutil.chain(
             ["/uri","/uri1"],
         ),
         headers = iterutil.dict_zip({
-            'User-Agent': iterutil.repeat('SecurityInnovation/0.0.1/Looper'),
+            'User-Agent': iterutil.repeat('SeattleNetworks/'+looper.__version__+'/Looper'),
             'Accept': iterutil.repeat("application/json"),
             'Date': iterutil.repeat_f(lambda: datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
             'X-Request-Id': iterutil.repeat_f(lambda:"%032x" % random.getrandbits(128)),
@@ -57,7 +57,7 @@ params = iterutil.chain(
         method = iterutil.repeat('POST'),
         url = iterutil.repeat('http://seattlenetworks.com/api'),
         headers = iterutil.dict_zip({
-            'User-Agent': iterutil.repeat('SecurityInnovation/0.0.1/Looper'),
+            'User-Agent': iterutil.repeat('SeattleNetworks/'+looper.__version__+'/Looper'),
             'Accept': iterutil.repeat("application/json"),
             'Date': iterutil.repeat_f(lambda: datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
             'Content-Type': iterutil.repeat('application/json'),
