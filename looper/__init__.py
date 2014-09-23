@@ -2,20 +2,8 @@
 '''
 A test case generation framework
 '''
-from . import iterutil
-__all__ = ['iterutil','BaseTestCase']
-try:
-    from . import SimpleHTTP
-    __all__.append('SimpleHTTP')
-except Exception:
-    pass
-try:
-    from . import blackmambaHTTP
-    __all__.append('blackmambaHTTP')
-except Exception:
-    pass
 
-class BaseTestCase():
+class BaseTestCase(object):
     '''
     The base test case
     '''
@@ -46,3 +34,8 @@ class BaseTestCase():
         '''
         raise Exception('BaseTest.check() must be overriden')
 
+from . import iterutil
+__all__ = ['iterutil','BaseTestCase']
+
+from . import clients
+__all__.append('clients')

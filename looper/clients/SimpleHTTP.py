@@ -2,7 +2,7 @@
 '''
 A test case generation framework
 '''
-from . import BaseTestCase,iterutil
+from .. import BaseTestCase,iterutil
 import urllib2
 
 class Test():
@@ -51,6 +51,8 @@ class Check():
             print "Request to %s got HTTP Error %d" % (req_url, resp_code)
             print req_body
             return False
+        print resp_code
+        print req_body
         return True
 
 class TestCase(Test,Check,BaseTestCase):

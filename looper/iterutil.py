@@ -6,7 +6,8 @@ Itertools extension for generating large and complex datasets using generators.
     count([n]) --> n, n+1, n+2, ...
     cycle(p) --> p0, p1, ... plast, p0, p1, ...
     repeat(elem [,n]) --> elem, elem, elem, ... endlessly or up to n times
-    repeat_f(f, n=None, args=[], kwargs={}) -> f(*args,**kwargs), f(*args,**kwargs), ... endlessly or up to n times
+    repeat_f(f, n=None, args=[], kwargs={}) --> f(*args,**kwargs), f(*args,**kwargs), ... endlessly or up to n times
+    stutter(p,n) --> for each item in p, repeat n times
     
     Iterators terminating on the shortest input sequence:
     chain(p, q, ...) --> p0, p1, ... plast, q0, q1, ... 
@@ -25,11 +26,16 @@ Itertools extension for generating large and complex datasets using generators.
     izip(p, q, ...) --> (p[0], q[0]), (p[1], q[1]), ... 
     izip_longest(p, q, ...) --> (p[0], q[0]), (p[1], q[1]), ... 
     concat(p,q,...) --> (p[0]+q[0]), (p[1]+q[1]), ... 
+
+    Dictionary specific operations terminating on the shortest input sequence:
     dict_zip(foo=p,bar=q) {"foo": p[0], "bar": q[0]}, {"foo": p[1], "bar": q[1]}, ... 
+
+    Dictionary specific combinatoric generators:
+    dict_product(foo=p,bar=q) --> cartesian product: {"foo": p[x], "bar": q[y]}
+    dict_replace(d,r) --> return a set of permutations such that each value is sequentially replaced with each item in r
     
     Combinatoric generators:
     product(p, q, ... [repeat=1]) --> cartesian product
-    dict_product(foo=p,bar=q) --> cartesian product: {"foo": p[x], "bar": q[y]}
     permutations(p[, r])
     combinations(p, r)
     combinations_with_replacement(p, r)
@@ -38,34 +44,6 @@ Itertools extension for generating large and complex datasets using generators.
     readfiles(file_a,file_b,...) --> reads file_a line by line, then file_a line by line...
 '''
 from itertools import *
-__all__ = '''
-chain
-combinations
-combinations_with_replacement
-compress
-count
-cycle
-dropwhile
-groupby
-ifilter
-ifilterfalse
-imap
-islice
-izip
-izip_longest
-permutations
-product
-starmap
-repeat
-takewhile
-concat
-readfiles
-dict_product
-dict_zip
-kwimap
-repeat_f
-'''.strip().split('\n')
-
 
 def concat(*args):
     '''
@@ -146,7 +124,7 @@ def dict_product(**kwargs):
     :param Kn: each k is used as the index in the resulting dicts
     :param Vn: each v is expected to be iterable
     :type Vn: iterable
-    :rtype: dictionary generator
+    :rtype: dict generator
 
     A version of itertools.product for dictionaries
 
@@ -195,7 +173,8 @@ def dict_zip(__dict_zip=None,**kwargs):
         
         pprint([x for x in r])
 
-        #OUTPUT    
+    Output::
+
         [{'a': 1, 'b': 'x'},
          {'a': 2, 'b': 'y'}]
 
@@ -205,6 +184,34 @@ def dict_zip(__dict_zip=None,**kwargs):
     k = __dict_zip.keys()
     for v in izip(*__dict_zip.values()):
         yield dict([(k[x],v[x]) for x in range(len(k))])
+
+def dict_replace(d,r):
+    '''
+    :param d: input dictionary
+    :type d: dictionary
+    :param r: replacements
+    :type r: bounded iterable
+    :rtype: dictionary generator
+
+    return a set of permutations such that each value is sequentially replaced with each item in r
+
+    Example::
+        d = {"a": 1, "b": 2}
+        replace = [3,4]
+        OUTPUT = iterutil.dict_replace(d,replace)
+
+    Output::
+        iter([
+            {"a": 3: "b": 2},
+            {"a": 4: "b": 2},
+            {"a": 1: "b": 3},
+            {"a": 1: "b": 4},
+        ])
+    '''
+    my_replace = [x for x in replace]
+    for k in d.keys():
+        for v in my_replace:
+            yield dict(d.items() + [(k,v)])
 
 def kwimap(f, *args, **kwargs):
     '''
@@ -251,7 +258,7 @@ def repeat_f(f, n=None, args=[], kwargs={}):
         for x in r:
             print x
 
-        #OUTPUT    
+    Output::
         NUQGMQEGKUMOKELVWUXIEPCPDWXCVOIN
         ZLBQPKDLOSGMEVTBWTLYOSIOIVIWONKR
         CSQKLSJTWRXNHJVPBQIAJWUYKURVTGWE
@@ -276,3 +283,24 @@ def repeat_f(f, n=None, args=[], kwargs={}):
         i+=1
         yield f(*args, **kwargs)
 
+
+def stutter(p,n):
+    '''
+    :param p: input iterator
+    :type d: iterable
+    :rtype: generator
+
+    for each item in p, repeat n times
+
+    Example::
+        p = [1,2,3,4]
+        OUTPUT = iterutil.stutter(p,2)
+
+    Output::
+        iter([1,1,2,2,3,3,4,4])
+    '''
+    for x in p:
+        for i in xrange(n):
+            yield x
+
+__all__ = filter(lambda f: f[0:2] != '__', dir())
