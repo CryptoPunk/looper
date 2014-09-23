@@ -3,7 +3,7 @@
 A test case generation framework
 '''
 
-__version__ = 0.14
+__version__ = "0.14"
 __author__ = '"Max Vohra" <max@seattlenetworks.com>'
 
 class BaseTestCase(object):

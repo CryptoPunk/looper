@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import sys,datetime,random
-from pprint import pprint
-sys.path.append('.')
+import datetime,random
+import sys,os
+sys.path.insert(0,os.path.join(os.path.dirname(__file__),'..','lib'))
 from looper import iterutil,clients
     
 params = iterutil.chain(
