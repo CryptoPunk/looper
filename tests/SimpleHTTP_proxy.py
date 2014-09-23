@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-import sys,datetime,random,urllib2
-from pprint import pprint
-sys.path.append('lib')
-from looper import iterutil,SimpleHTTP
+import datetime,random,urllib2
+import sys,os
+sys.path.insert(0,os.path.join(os.path.dirname(__file__),'..','lib'))
+from looper import iterutil,clients
 
 params = iterutil.chain(
     iterutil.dict_zip(
@@ -22,7 +22,7 @@ params = iterutil.chain(
     ),
 )
 
-test = SimpleHTTP.TestCase(params)
+test = clients.SimpleHTTP.TestCase(params)
 
 #Install a proxy before running
 proxy = urllib2.ProxyHandler({'http': '127.0.0.1:8080'})
