@@ -42,6 +42,7 @@ Itertools extension for generating large and complex datasets using generators.
 
     Utility generators:
     readfiles(file_a,file_b,...) --> reads file_a line by line, then file_a line by line...
+    gevent_lockingiter(iterator) --> takes an iterator and makes it gevent-threadsafe
 '''
 from itertools import *
 
@@ -302,5 +303,28 @@ def stutter(p,n):
     for x in p:
         for i in xrange(n):
             yield x
+
+try: 
+    import gevent
+
+    class gevent_iterlock:
+        """
+        Takes an iterator and makes it thread-safe by
+        serializing call to the `next` method of given iterator.
+        """
+        def __init__(self, it):
+            self.it = it
+            self.lock = gevent.coros.BoundedSemaphore()
+    
+        def __iter__(self):
+            return self
+    
+        def next(self):
+            with self.lock:
+                return self.it.next()
+
+except ImportError:
+    pass
+
 
 __all__ = filter(lambda f: f[0:2] != '__', dir())

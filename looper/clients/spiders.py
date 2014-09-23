@@ -11,13 +11,12 @@ class Spider():
     scrapers = []
     callbacks = []
 
-    logfile = None
-    loglevel = 0
-
     LOG_INFO = 0
     LOG_ERROR = 1
     LOG_DEBUG = 2
 
+    logfile = None
+    loglevel = Spider.LOG_INFO
 
     def log(self,msg,level):
         if isinstance(msg,Exception):
@@ -42,7 +41,7 @@ class Spider():
             response: a looper.clients.httputil.HTTPResponse style object
         '''
 
-        self.log(request.url,ContentSpider.LOG_DEBUG)
+        self.log(request.url,Spider.LOG_DEBUG)
         for scraper in self.scrapers:
             if scraper.canparse(request,response):
                 try:
@@ -51,7 +50,7 @@ class Spider():
                             callback(resource)
                 except Exception as e:
                     if self.log is not None:
-                        self.log(e,ContentSpider.LOG_ERROR)
-                        self.log(request,ContentSpider.LOG_ERROR)
-                        self.log(response,ContentSpider.LOG_ERROR)
+                        self.log(e,Spider.LOG_ERROR)
+                        self.log(request,Spider.LOG_ERROR)
+                        self.log(response,Spider.LOG_ERROR)
 

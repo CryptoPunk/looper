@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import sys,datetime,random,json
 from pprint import pprint
-sys.path.append('lib')
-from looper import iterutil,SimpleHTTP
+sys.path.append('.')
+from looper import iterutil,clients
     
 params = iterutil.chain(
     iterutil.dict_zip(
         method = iterutil.repeat('POST'),
-        url = iterutil.repeat('http://seattlenetworks.com/api'),
+        url = iterutil.repeat('http://127.0.0.1/api'),
         headers = iterutil.dict_zip({
             'User-Agent': iterutil.repeat('SecurityInnovation/0.0.1/Looper'),
             'Accept': iterutil.repeat("application/json"),
@@ -24,7 +24,5 @@ params = iterutil.chain(
     ),
 )
 
-test = SimpleHTTP.TestCase(params)
+test = clients.SimpleHTTP.TestCase(params)
 test.run()
-
-

@@ -3,7 +3,7 @@ from distutils.core import setup
 
 
 setup(name='looper',
-      version='1.2',
+      version='1.4',
       description='A library for generating test cases',
       author='Max Vohra',
       author_email='max@seattlenetworks.com',

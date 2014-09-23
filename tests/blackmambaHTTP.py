@@ -9,7 +9,7 @@ params = iterutil.chain(
         method = iterutil.repeat('GET'),
         url = iterutil.concat(
             iterutil.repeat('http://'),
-            iterutil.repeat('localhost'),
+            iterutil.repeat('127.0.0.1'),
             ["/uri","/uri1"],
         ),
         headers = iterutil.dict_zip({
@@ -22,5 +22,15 @@ params = iterutil.chain(
     ),
 )
 
-test = clients.blackmambaHTTP.TestCase(params)
+class Check(object):
+    '''
+    A simple HTTP response check
+    '''
+    def check(self,request,response):
+        print response
+
+class MyTestCase(Check,clients.blackmambaHTTP.TestCase):
+    pass
+
+test = MyTestCase(params)
 test.run()

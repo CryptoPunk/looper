@@ -5,7 +5,7 @@ A test case generation framework
 from .. import BaseTestCase,iterutil
 import urllib2
 
-class Test():
+class Test(object):
     '''
     A simple HTTP test runner
     '''
@@ -40,7 +40,7 @@ class Test():
         
         return retval
 
-class Check():
+class Check(object):
     '''
     A simple HTTP response check
     '''

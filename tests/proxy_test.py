@@ -4,7 +4,6 @@ from pprint import pprint
 sys.path.append('lib')
 from looper import iterutil,SimpleHTTP
 
-    
 params = iterutil.chain(
     iterutil.dict_zip(
         method = iterutil.repeat('GET'),
@@ -30,5 +29,3 @@ proxy = urllib2.ProxyHandler({'http': '127.0.0.1:8080'})
 opener = urllib2.build_opener(proxy)
 urllib2.install_opener(opener)
 test.run()
-
-

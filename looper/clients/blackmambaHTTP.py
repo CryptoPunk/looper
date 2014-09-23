@@ -8,7 +8,7 @@ class Test(object):
     BlackMamba HTTP test runner
     '''
     def execute(self, url, method='GET', headers={},body=None):
-        request = httputil.RawHTTPRequest(url,method,headers,body)
+        request = httputil.ParamHTTPRequest(url,method,headers,body)
         response = None
         try:
             yield blackmamba.resolve(request.host)
@@ -24,14 +24,7 @@ class Test(object):
             response=httputil.RawHTTPResponse(response)
         )
     
-class Check(object):
-    '''
-    Simple BlackMamba HTTP response handler
-    '''
-    def check(self,request,response):
-        print response
-
-class TestCase(Test,Check,BaseTestCase):
+class TestCase(Test,BaseTestCase):
     '''
     blackmamba HTTP test case wrapper
     '''
@@ -42,3 +35,5 @@ class TestCase(Test,Check,BaseTestCase):
     def run(self):
         blackmamba.run(self.requestGenerator())
 
+    def debug(self):
+        blackmamba.debug(self.requestGenerator())
