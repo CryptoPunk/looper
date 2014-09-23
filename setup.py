@@ -5,7 +5,7 @@ sys.path.insert(0,os.path.join(os.path.dirname(__file__),'lib'))
 import looper
 
 setup(name='looper',
-      version=looper.__version__
+      version=looper.__version__,
       description='A library for generating test cases',
       author='Max Vohra',
       author_email='max@seattlenetworks.com',
