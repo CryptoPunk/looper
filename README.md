@@ -5,15 +5,32 @@ This module was created after getting sick of the limited functionality of burp 
 * looper.iterutil
   * Itertools extension for generating large and complex datasets using generators.
 
+* looper.uqueue
+  * A queueing system which only queues unique things
+
+* looper.historydb
+  * An HTTP request/response history database.
+
 * looper.BaseTestCase
   * The base test case
 
-* looper.SimpleHTTP
+* looper.clients.SimpleHTTP
   * A set of mixins which use urllib2
 
-* looper.blackmambaHTTP
-  * A set of test case mixins which use rootfoo's blackmamba
+* looper.clients.blackmambaHTTP
+  * A set of test case mixins which use rootfoo's blackmamba to send requests
 
+* looper.clients.geventHTTP
+  * A set of test case mixins which use gevent to send requests
+
+* looper.clients.httputil
+  * Some supporting request and response objects to unify the request styles
+
+
+## Installation
+```
+pip install git+https://github.com/CryptoPunk/looper.git
+```
 ### Simple URL Iteration
 ```
 #!/usr/bin/env python
