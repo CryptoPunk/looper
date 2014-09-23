@@ -11,6 +11,7 @@ setup(name='looper',
       author_email='max@seattlenetworks.com',
       url='http://seattlenetworks.com/',
       license="GNU General Public License v3 (GPLv3)",
+      package_dir={'':'src'},
       packages=['looper'],
      )
 
